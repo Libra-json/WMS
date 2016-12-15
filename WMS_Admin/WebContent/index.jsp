@@ -601,7 +601,12 @@
 							<input type="checkbox" class="js-switch" id="closed-sidebar" />
 						</span>
 					</div>
-					
+					<div class="setting-box clearfix">
+						<span class="setting-title pull-left">固定底部栏</span>
+						<span class="setting-switch pull-right">
+							<input type="checkbox" class="js-switch" id="fixed-footer" />
+						</span>
+					</div>
 					<!-- ====================================
 					=======================以下为换颜色板块=====================
 					============================================ -->
