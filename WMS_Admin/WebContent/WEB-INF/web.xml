@@ -2,12 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
   <display-name>WMS_Admin</display-name>
   <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
+    <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>
   
   <context-param>
@@ -37,7 +32,7 @@
     <filter-name>encodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-  <filter>
+<!--   <filter>
     <filter-name>userLogin</filter-name>
     <filter-class>com.wms.common.UserLoginFilter</filter-class>
   </filter>
@@ -46,7 +41,7 @@
     <filter-name>userLogin</filter-name>
     <url-pattern>/index.jsp</url-pattern>
     <url-pattern>/pages/*</url-pattern>
-  </filter-mapping>
+  </filter-mapping> -->
   
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

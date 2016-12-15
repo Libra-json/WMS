@@ -40,16 +40,29 @@ var Login = function() {
 		var errorHandler = $('.errorHandler', form);
 		form.validate({
 			rules : {
-				username : {
+				u_name : {
 					minlength : 2,
+					maxlength : 11,
 					required : true
 				},
-				password : {
+				u_pwd : {
 					minlength : 6,
-					required : true
+					maxlength : 20,
+					required : true,
 				}
-			},
-			submitHandler : function(form) {
+			},messages:{
+				u_name: {
+					minlength : '最少输入2个字符',
+					maxlength : '最多输入11个字符',
+					required: '请输入你的用户名/手机号.'
+				},
+				
+				u_pwd: {
+					minlength : '最少输入6个字符',
+					maxlength : '最多输入20个字符',
+					required: '请输入你的密码.'
+				}
+			},submitHandler : function(form) {
 				errorHandler.hide();
 				form.submit();
 			},

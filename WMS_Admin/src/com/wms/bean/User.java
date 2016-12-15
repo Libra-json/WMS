@@ -11,7 +11,7 @@ public class User {
 	private String u_pwd; // 密码
 	private String u_sex; // 性别
 	private int u_age; // 年龄
-	private int u_phone; // 电话号码
+	private String u_phone; // 电话号码
 	private int u_role; // 角色
 	private String u_cardid; // 身份证号码
 	private String u_email; // 邮箱
@@ -58,11 +58,11 @@ public class User {
 		this.u_age = u_age;
 	}
 
-	public int getU_phone() {
+	public String getU_phone() {
 		return u_phone;
 	}
 
-	public void setU_phone(int u_phone) {
+	public void setU_phone(String u_phone) {
 		this.u_phone = u_phone;
 	}
 
