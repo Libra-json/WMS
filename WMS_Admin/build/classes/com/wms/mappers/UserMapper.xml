@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.dao.UserDao">
+
+	<resultMap type="com.wms.bean.User" id="UserResult">
+		<result property="u_id" column="u_id"/>
+		<result property="u_name" column="u_name"/>
+		<result property="u_pwd" column="u_pwd"/>
+		<result property="u_sex" column="u_sex"/>
+		<result property="u_age" column="u_age"/>
+		<result property="u_phone" column="u_phone"/>
+		<result property="u_role" column="u_role"/>
+		<result property="u_cardid" column="u_cardid"/>
+		<result property="u_email" column="u_email"/>
+		<result property="u_ck" column="u_ck"/>
+		<result property="u_state" column="u_state"/>
+	</resultMap>
+	
+	<select id="login" parameterType="com.wms.bean.User" resultType="com.wms.bean.User">
+		select * from user where u_pwd=#{u_pwd} and ( u_name=#{u_name} or u_phone = #{u_name}) 
+	</select>
+</mapper> 
