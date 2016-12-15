@@ -1,14 +1,12 @@
 package com.wms.util;
 
 /**
- * �ַ�����
  * @author 
  *
  */
 public class StringUtil {
 
 	/**
-	 * �ж��Ƿ��ǿ�
 	 * @param str
 	 * @return
 	 */
@@ -21,7 +19,6 @@ public class StringUtil {
 	}
 	
 	/**
-	 * �ж��Ƿ��ǿ�
 	 * @param str
 	 * @return
 	 */
@@ -34,7 +31,6 @@ public class StringUtil {
 	}
 	
 	/**
-	 * ��ʽ��ģ���ѯ
 	 * @param str
 	 * @return
 	 */

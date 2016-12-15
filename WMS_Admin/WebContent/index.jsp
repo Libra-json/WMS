@@ -67,6 +67,7 @@
 			 -->
 						<ul class="main-navigation-menu">
 							<li class="active open">
+								<a href="javascript:void(0);"  id="home">
 									<div class="item-content">
 										<div class="item-media">
 											<i class=" ti-sharethis-alt"></i>
@@ -386,12 +387,12 @@
 								</a>
 								<ul class="sub-menu">
 									<li>
-										<a href="javascript:void(0);" id="PickingList">
+										<a href="javascript:void(0);" id="profile">
 											<span class="title">个人中心</span>
 										</a>
 									</li>
 									<li>
-										<a href="javascript:void(0);" id="Picking">
+										<a href="javascript:void(0);" id="message">
 											<span class="title">消息中心</span>
 										</a>
 									</li>
@@ -530,13 +531,13 @@
 								</a>
 								<ul class="dropdown-menu dropdown-dark">
 									<li>
-										<a href="javascript:void(0);">
+										<a href="javascript:void(0);" id="T-profile">
 											个人中心
 										</a>
 									</li>
 
 									<li>
-										<a hef="javascript:void(0);">
+										<a hef="javascript:void(0);" id="T-message">
 											消息中心
 										</a>
 									</li>
@@ -558,16 +559,7 @@
 				</header>
 				<div class="main-content" >
 					<div class="wrap-content container" id="container">
-						<section id="page-title" class="padding-top-15 padding-bottom-15">
-							<div class="row" id="mainPanel">
-								<div class="col-sm-7">
-									<h1 class="mainTitle"> 系统首页</h1>
-								</div>
-								<div class="col-sm-5">
-									
-								</div>
-							</div>
-						</section>
+						<jsp:include page="pages/home.jsp"></jsp:include>
 					</div>
 				</div>
 			</div>
@@ -703,77 +695,92 @@
 			jQuery(document).ready(function() {
 				Main.init();
 				Index.init();
+				$("#home").click(function(){
+					$('#container').load('pages/home.jsp');
+				})
+				$("#profile").click(function(){
+					$('#container').load('pages/profile.jsp');
+				})
+				$("#message").click(function(){
+					$('#container').load('pages/message.jsp');
+				})
+				$("#T-profile").click(function(){
+					$('#container').load('pages/profile.jsp');
+				})
+				$("#T-message").click(function(){
+					$('#container').load('pages/message.jsp');
+				})
 				$("#addRole").click(function(){
-					$('#mainPanel').load('pages/addRole.html');
+					$('#container').load('pages/addRole.html');
 				})
 				$("#viewRole").click(function(){
-					$('#mainPanel').load('pages/viewRole.html');
+					$('#container').load('pages/viewRole.html');
 				})
 				$("#Receiving").click(function(){
-					$('#mainPanel').load('pages/Receiving.html');
+					$('#co').load('pages/Receiving.html');
 				})
 				$("#putAway").click(function(){
-					$('#mainPanel').load('pages/putAway.html');
+					$('#container').load('pages/putAway.html');
 				})
 				$("#PickingList").click(function(){
-					$('#mainPanel').load('pages/PickingList.html');
+					$('#container').load('pages/PickingList.html');
 				})
 				$("#Picking").click(function(){
-					$('#mainPanel').load('pages/Picking.html');
+					$('#container').load('pages/Picking.html');
 				})
 				$("#Cycle").click(function(){
-					$('#mainPanel').load('pages/Cycle.html');
+					$('#container').load('pages/Cycle.html');
 				})
 				$("#Transfer").click(function(){
-					$('#mainPanel').load('pages/Transfer.html');
+					$('#container').load('pages/Transfer.html');
 				})
 				$("#QC").click(function(){
-					$('#mainPanel').load('pages/QC.html');
+					$('#container').load('pages/QC.html');
 				})
 				$("#FeeType").click(function(){
-					$('#mainPanel').load('pages/FeeType.html');
+					$('#container').load('pages/FeeType.html');
 				})
 				$("#FeeRule").click(function(){
-					$('#mainPanel').load('pages/FeeRule.html');
+					$('#container').load('pages/FeeRule.html');
 				})
 				$("#FeeSettlement").click(function(){
-					$('#mainPanel').load('pages/FeeSettlement.html');
+					$('#container').load('pages/FeeSettlement.html');
 				})
 				$("#ReceiptList").click(function(){
-					$('#mainPanel').load('pages/ReceiptList.html');
+					$('#container').load('pages/ReceiptList.html');
 				})
 				$("#DispatchList").click(function(){
-					$('#mainPanel').load('pages/DispatchList.html');
+					$('#container').load('pages/DispatchList.html');
 				})
 				$("#MoveList").click(function(){
-					$('#mainPanel').load('pages/MoveList.html');
+					$('#container').load('pages/MoveList.html');
 				})
 				$("#InventoryList").click(function(){
-					$('#mainPanel').load('pages/InventoryList.html');
+					$('#container').load('pages/InventoryList.html');
 				})
 				$("#CheckList").click(function(){
-					$('#mainPanel').load('pages/CheckList.html');
+					$('#container').load('pages/CheckList.html');
 				})
 				$("#InPlanReport").click(function(){
-					$('#mainPanel').load('pages/InPlanReport.html');
+					$('#container').load('pages/InPlanReport.html');
 				})
 				$("#InReport").click(function(){
-					$('#mainPanel').load('pages/InReport.html');
+					$('#container').load('pages/InReport.html');
 				})
 				$("#InPlanVarianceReport").click(function(){
-					$('#mainPanel').load('pages/InPlanVarianceReport.html');
+					$('#container').load('pages/InPlanVarianceReport.html');
 				})
 				$("#OutReport").click(function(){
-					$('#mainPanel').load('pages/OutReport.html');
+					$('#container').load('pages/OutReport.html');
 				})
 				$("#DDR").click(function(){
-					$('#mainPanel').load('pages/DDR.html');
+					$('#container').load('pages/DDR.html');
 				})
 				$("#CheckVarianceReport").click(function(){
-					$('#mainPanel').load('pages/CheckVarianceReport.html');
+					$('#container').load('pages/CheckVarianceReport.html');
 				})
 				$("#StatusReporting").click(function(){
-					$('#mainPanel').load('pages/StatusReporting.html');
+					$('#container').load('pages/StatusReporting.html');
 				})
 			});
 		</script>
