@@ -29,24 +29,37 @@ public class UserController {
 	 */
 	@RequestMapping(value="login")
 	@ResponseBody
-	public Map<String, Object> login(User user,HttpServletRequest request)throws Exception{
+	public Map<String, Object> login(User user,String u_yzm, HttpServletRequest request)throws Exception{
 		System.out.println("======================登陆验证");
 		String MD5password = EncryptUtil.md5(user.getU_pwd());
 		user.setU_pwd(MD5password);
 		User resultUser=userService.login(user);
 		System.out.println("===========================返回结果集");
 		HttpSession session=request.getSession();
-		
+		String yzm = (String)session.getAttribute("randCheckCode");
 		Map<String, Object> map = new HashMap<String,Object>();
-		if(resultUser==null){
+		if(!u_yzm.equalsIgnoreCase(yzm)){
+			map.put("result", "fail");
+			map.put("errorMsg","验证码输入错误，请重新输入！");
+		}else if(resultUser==null){
 			map.put("errorMsg", "账号或密码错误,请重新输入！");
 			map.put("result", "fail");
 		}else{
+			session.removeAttribute("randCheckCode");
 			session.setAttribute("currentUser", resultUser);
 			map.put("result","seccuss");
 		}
 		
 		return map;
+	}
+	
+	/**
+	 * 转到index页面
+	 * @return
+	 */
+	@RequestMapping("/index")
+	public String index(){
+		return "index";
 	}
 	
 	/**

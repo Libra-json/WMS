@@ -41,27 +41,39 @@ var Login = function() {
 		form.validate({
 			rules : {
 				u_name : {
+					required : true,
 					minlength : 2,
-					maxlength : 11,
-					required : true
+					maxlength : 11
 				},
 				u_pwd : {
-					minlength : 6,
-					maxlength : 20,
 					required : true,
+					minlength : 6,
+					maxlength : 20
+				},
+				u_yzm : {
+					required : true,
+					minlength : 4,
+					maxlength : 4
 				}
 			},messages:{
 				u_name: {
+					required: '请输入你的用户名/手机号.',
 					minlength : '最少输入2个字符',
-					maxlength : '最多输入11个字符',
-					required: '请输入你的用户名/手机号.'
+					maxlength : '最多输入11个字符'
+					
 				},
 				
 				u_pwd: {
+					required: '请输入你的密码.',
 					minlength : '最少输入6个字符',
-					maxlength : '最多输入20个字符',
-					required: '请输入你的密码.'
-				}
+					maxlength : '最多输入20个字符'
+				},
+				
+				u_yzm: {
+					required: '请输入你的验证码.',
+					minlength : '最少输入4个字符',
+					maxlength : '最多输入4个字符'
+				},
 			},submitHandler : function(form) {
 				errorHandler.hide();
 				form.submit();

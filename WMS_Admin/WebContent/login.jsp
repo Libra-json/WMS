@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%
+    	String path = request.getContextPath();
+    %>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -39,13 +42,14 @@
 							</p>
 							<div class="form-group">
 								<span class="input-icon">
-									<input type="text" class="form-control" name="u_name" placeholder="用户名/手机号码">
-									<i class="fa fa-user"></i> 
+									<input type="text" class="form-control" id="u_name" name="u_name" onchange="a_name();" placeholder="用户名/手机号码">
+									<i class="fa fa-user"></i>
 								</span>
 							</div>
+							<p id="zhts" style="color: red;margin-left:30px;"></p>
 							<div class="form-group form-actions">
 								<span class="input-icon">
-									<input type="password" class="form-control password" name="u_pwd" placeholder="密码">
+									<input type="password" class="form-control password" name="u_pwd" id="u_pwd" onchange="a_pwd();" placeholder="密码">
 									<i class="fa fa-lock"></i>
 									
 									<a class="forgot" href="pages/forgot.html">
@@ -53,16 +57,26 @@
 									</a> 
 								</span>
 							</div>
+							<p id="mmts" style="color: red;margin-left:30px;"></p>
+							<div class="form-group form-actions">
+								<span class="input-icon">
+									<i class="ti-quote-left"></i>
+									<input type="text" class="form-control u_yzm" id="u_yzm" name="u_yzm" onchange="a_yzm();" placeholder="验证码">
+									
+								</span>
+							</div>
+							<p id="yzmts" style="color: red;margin-left:30px;"></p>
 							<div class="form-actions">
-								<div class="checkbox clip-check check-primary">
-									<input type="checkbox" id="remember" value="1">
-									<label for="remember">
-										记住当前账号
-									</label>
+								<div style="margin-left: 70px;float: left;">
+									<img src="<%=path %>/checkCodeAction/service.do" id="imgcod" 
+									onclick="randcord(); " title="点击图片刷新验证码"/>
 								</div>
-								<button type="button" id="submitForm" class="btn btn-primary pull-right">
+								<button type="button" id="submitForm" class="btn btn-primary pull-right" onclick="return checkDL();">
+								
 									登录 <i class="fa fa-arrow-circle-right"></i>
+									
 								</button>
+									
 							</div>
 							
 						</fieldset>
@@ -82,25 +96,80 @@
 		<script src="vendor/switchery/switchery.min.js"></script>
 		<script src="vendor/jquery-validation/jquery.validate.min.js"></script>
 		<script src="assets/js/main.js"></script>
-		<script src="assets/js/login.js"></script>
+		
 		<script>
 			jQuery(document).ready(function() {
 				Main.init();
 				Login.init();
 			});
 			
-			$("#submitForm").click(function(){
-				$.post("user/login.do",
-					$("#Form").serialize(),
-   		            function(data){
-   						if(data.result=="fail"){
-   							
-   						}else if(data.result=="seccuss"){
-   							window.location.href='index.jsp';
-   						}
- 					}
-    		   	)
-			})
+			
+			function randcord(){
+				document.getElementById("imgcod").src='<%=path %>/checkCodeAction/service.do?'+ Math.random();
+			}
+		
+			/* 按回车键进行登录 */
+			document.onkeydown=function(event){
+				 if (event.keyCode==13){ //回车键的键值为13
+					 checkDL();
+				 }
+			}
+			
+			function a_name(){
+				document.getElementById("zhts").innerHTML = '';
+				var u_name = document.getElementById("u_name").value;
+	            	if (u_name == "") {
+						document.getElementById("zhts").innerHTML = '*用户名不可为空！';
+		            }else if(u_name.length<2 || u_name.length>12){
+		            	document.getElementById("zhts").innerHTML = '*用户名不可小于2位或大于12位！';
+		            }
+			}
+			
+			function a_pwd(){
+				document.getElementById("mmts").innerHTML = '';
+				var u_pwd = document.getElementById("u_pwd").value;
+	            	if(u_pwd == ""){
+		            	document.getElementById("mmts").innerHTML = '*密码不可为空！';
+		            }else if(u_pwd.length<6 || u_pwd.length>20){
+		            	document.getElementById("mmts").innerHTML = '*密码不可小于6位或大于20位！';
+		            }
+			}
+			
+			function a_yzm(){
+				document.getElementById("yzmts").innerHTML = '';
+				var u_pwd = document.getElementById("u_yzm").value;
+					if(u_yzm == ""){
+		            	document.getElementById("yzmts").innerHTML = '*验证码不可为空！';
+		            }
+			}
+			
+			function checkDL(){
+	            var u_name = document.getElementById("u_name").value;
+	            var u_pwd = document.getElementById("u_pwd").value;
+	            var u_yzm = document.getElementById("u_yzm").value;
+            	if (u_name == "") {
+					document.getElementById("zhts").innerHTML = '*用户名不可为空！';
+					return false;
+	            }else if (u_pwd == "") {
+					document.getElementById("mmts").innerHTML = '*密码不可为空！';
+					return false;
+	            }else if (u_yzm == "") {
+					document.getElementById("yzmts").innerHTML = '*验证码不可为空！';
+					return false;
+	            }else{
+	            	$.post("<%=path%>/user/login.do",
+	    	            	{"u_name":u_name,"u_pwd":u_pwd,"u_yzm":u_yzm},
+	    	            	function(data) {
+	    						if(data.result=="fail"){
+	    							document.getElementById("mmts").innerHTML = data.errorMsg;
+	    							randcord();/* 重新加载验证码 */
+	    						}else if(data.result=="seccuss"){
+	    							window.location.href = "<%=path%>/index.jsp";
+	    						}
+	    					}
+	    				);
+	            }
+			}
 		</script>
 	</body>
 </html>
