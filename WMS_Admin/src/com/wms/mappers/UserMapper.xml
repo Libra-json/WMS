@@ -18,7 +18,55 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="u_state" column="u_state"/>
 	</resultMap>
 	
+	<sql id="Base_user_room">
+		u.u_id,u.u_name,u.u_sex,u.u_age,u.u_phone,u.u_role,u.u_cardid,u.u_email,u.u_ck,r.r_name
+	</sql>
+	
 	<select id="login" parameterType="com.wms.bean.User" resultType="com.wms.bean.User">
 		select * from user where u_pwd=#{u_pwd} and ( u_name=#{u_name} or u_phone = #{u_name}) 
 	</select>
+	
+	<select id="queryAll" parameterType="com.wms.bean.User" resultType="com.wms.bean.User">
+		select <include refid="Base_user_room" /> from user u, room r WHERE u.u_ck=r.r_id order by u.u_id desc;
+	</select>
+	
+	<select id="queryById" parameterType="com.wms.bean.User" resultType="com.wms.bean.User">
+		select * from user where u_id=#{u_id}
+	</select>
+	
+	<insert id="addUser" parameterType="com.wms.bean.User">
+		insert into user(u_id,u_name,u_pwd,u_sex,u_age,u_phone,u_role,u_cardid,u_email,u_ck) values(#{u_id},#{u_name},#{u_pwd},#{u_sex},#{u_age},#{u_phone},#{u_role},#{u_cardid},#{u_email},#{u_ck})
+	</insert>
+	
+	<update id="upDate" parameterType="com.wms.bean.User">
+		update user
+		<set>
+			<if test="u_name!=null and u_name!='' ">
+				u_name=#{u_name},
+			</if>
+			<if test="u_sex!=null and u_sex!='' ">
+				u_sex=#{u_sex},
+			</if>
+			<if test="u_age!=null and u_age!='' ">
+				u_age=#{u_age},
+			</if>
+			<if test="u_phone!=null and u_phone!='' ">
+				u_phone=#{u_phone},
+			</if>
+			<if test="u_cardid!=null and u_cardid!='' ">
+				u_cardid=#{u_cardid},
+			</if>
+			<if test="u_email!=null and u_email!='' ">
+				u_email=#{u_email},
+			</if>
+			<if test="u_ck!=null and u_ck!='' ">
+				u_ck=#{u_ck},
+			</if>
+		</set>
+		where u_id=#{u_id}
+	</update>
+	
+	<delete id="delete" parameterType="String">
+		delete from room where u_id=#{u_id}
+	</delete>
 </mapper> 

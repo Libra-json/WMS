@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.dao.RoomDao">
+	<resultMap type="com.wms.bean.Room" id="RoomResult">
+		<result property="r_id" column="r_id"/>
+		<result property="r_area" column="r_area"/>
+		<result property="r_name" column="r_name"/>
+		<result property="r_lxr" column="r_lxr"/>
+		<result property="r_email" column="r_email"/>
+		<result property="r_phone" column="r_phone"/>
+	</resultMap>
+	
+	<select id="queryByUser" resultType="com.wms.bean.Room">
+		SELECT r.* from room r,user u where r.r_id!=u.u_ck
+	</select>
+	
+	<sql id="Baes_room">
+		r_id,r_area,r_name,r_lxr,r_email,r_phone
+	</sql>
+	
+	<select id="queryAll" parameterType="com.wms.bean.Room" resultType="com.wms.bean.Room">
+		select * from room
+	</select>
+	
+	<select id="queryById" parameterType="com.wms.bean.Room" resultType="com.wms.bean.Room">
+		select * from room where r_id=#{r_id}
+	</select>
+	
+	<insert id="addRoom" parameterType="com.wms.bean.Room">
+		insert into room values(#{r_id},#{r_area},#{r_name},#{r_lxr},#{r_email},#{r_phone})
+	</insert>
+	
+	<update id="update" parameterType="com.wms.bean.Room">
+		update room
+		<set>
+			<if test="r_area!=null and r_area!='' ">
+				r_area=#{r_area},
+			</if>
+			<if test="r_name!=null and r_name!='' ">
+				r_name=#{r_name},
+			</if>
+			<if test="r_lxr!=null and r_lxr!='' ">
+				r_lxr=#{r_lxr},
+			</if>
+			<if test="r_email!=null and r_email!='' ">
+				r_email=#{r_email},
+			</if>
+			<if test="r_phone!=null and r_phone!='' ">
+				r_phone=#{r_phone},
+			</if>
+		</set>
+		where r_id=#{r_id}
+	</update>
+	
+	<delete id="delete" parameterType="String">
+		delete from room where r_id=#{r_id}
+	</delete>
+	
+</mapper> 

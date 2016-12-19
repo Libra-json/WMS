@@ -93,7 +93,7 @@
 										</a>
 										<ul class="sub-menu">
 											<li>
-												<a href="javascript:void(0);" id="addRole">
+												<a href="javascript:void(0);" id="room">
 													<span class="title"> 仓库列表 </span>
 												</a>
 											</li>
@@ -117,12 +117,12 @@
 										</a>
 										<ul class="sub-menu">
 											<li>
-												<a href="javascript:void(0);" id="Receiving">
+												<a href="javascript:void(0);" id="user">
 													<span class="title">角色列表</span>
 												</a>
 											</li>
 											<li>
-												<a href="javascript:void(0);" id="putAway">
+												<a href="javascript:void(0);" id="addUser">
 													<span class="title">新增角色</span>
 												</a>
 											</li>
@@ -715,17 +715,25 @@
 				$("#T-message").click(function(){
 					$('#container').load('pages/message.jsp');
 				})
-				$("#addRole").click(function(){
-					$('#container').load('pages/addRole.html');
+				$("#room").click(function(){
+					$('#container').load('<%=path %>/room/queryAll.do');
 				})
 				$("#viewRole").click(function(){
-					$('#container').load('pages/viewRole.html');
+					$('#container').load('pages/addRoom.jsp');
 				})
-				$("#Receiving").click(function(){
-					$('#co').load('pages/Receiving.html');
+				$("#user").click(function(){
+					$('#container').load('<%=path %>/user/queryAll.do');
 				})
-				$("#putAway").click(function(){
-					$('#container').load('pages/putAway.html');
+				$("#addUser").click(function(){
+					$.post("room/queryByUser.do",
+			            function(data){
+							if(data.result=="fail"){
+								alert(data.errorMsg);
+							}else if(data.result=="seccuss"){
+								$('#container').load('pages/user/addUser.jsp');
+							}
+						}
+				   	)
 				})
 				$("#PickingList").click(function(){
 					$('#container').load('pages/PickingList.html');
