@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.dao.ExeclTestDAO">
+	<resultMap type="com.wms.bean.Test" id="TestResult">
+		<result property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="banji" column="banji"/>
+		<result property="bscj" column="bscj"/>
+		<result property="jscj" column="jscj"/>
+	</resultMap>
+
+	<select id="queryAll" resultMap="TestResult">
+		select * from test
+	</select>
+</mapper>

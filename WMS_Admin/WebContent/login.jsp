@@ -128,19 +128,19 @@
 			function a_pwd(){
 				document.getElementById("mmts").innerHTML = '';
 				var u_pwd = document.getElementById("u_pwd").value;
-	            	if(u_pwd == ""){
-		            	document.getElementById("mmts").innerHTML = '*密码不可为空！';
-		            }else if(u_pwd.length<6 || u_pwd.length>20){
-		            	document.getElementById("mmts").innerHTML = '*密码不可小于6位或大于20位！';
-		            }
+            	if(u_pwd == ""){
+	            	document.getElementById("mmts").innerHTML = '*密码不可为空！';
+	            }else if(u_pwd.length<6 || u_pwd.length>20){
+	            	document.getElementById("mmts").innerHTML = '*密码不可小于6位或大于20位！';
+	            }
 			}
 			
 			function a_yzm(){
 				document.getElementById("yzmts").innerHTML = '';
 				var u_pwd = document.getElementById("u_yzm").value;
-					if(u_yzm == ""){
-		            	document.getElementById("yzmts").innerHTML = '*验证码不可为空！';
-		            }
+				if(u_yzm == ""){
+	            	document.getElementById("yzmts").innerHTML = '*验证码不可为空！';
+	            }
 			}
 			
 			function checkDL(){
