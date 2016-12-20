@@ -14,4 +14,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="queryAll" resultMap="TestResult">
 		select * from test
 	</select>
+	
+	<insert id="insertTest" parameterType="com.wms.bean.Test">
+		insert into test values(
+       		null, 
+       		#{name},
+       		#{banji},
+            #{bscj},
+            #{jscj}
+        )
+	</insert>
 </mapper>

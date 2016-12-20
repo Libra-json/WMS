@@ -46,4 +46,9 @@ public class Test {
 	public void setJscj(String jscj) {
 		this.jscj = jscj;
 	}
+
+	@Override
+	public String toString() {
+		return "Test [id=" + id + ", name=" + name + ", banji=" + banji + ", bscj=" + bscj + ", jscj=" + jscj + "]";
+	}
 }

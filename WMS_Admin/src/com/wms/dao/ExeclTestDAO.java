@@ -8,4 +8,6 @@ public interface ExeclTestDAO {
 
 	List<Test> queryAll();
 
+	void insertTest(Test info);
+
 }

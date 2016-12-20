@@ -161,7 +161,7 @@
 	    	            	{"u_name":u_name,"u_pwd":u_pwd,"u_yzm":u_yzm},
 	    	            	function(data) {
 	    						if(data.result=="fail"){
-	    							document.getElementById("mmts").innerHTML = data.errorMsg;
+	    							document.getElementById("yzmts").innerHTML = data.errorMsg;
 	    							randcord();/* 重新加载验证码 */
 	    						}else if(data.result=="seccuss"){
 	    							window.location.href = "<%=path%>/index.jsp";

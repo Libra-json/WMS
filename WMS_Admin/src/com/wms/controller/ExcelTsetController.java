@@ -22,6 +22,9 @@ import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -46,7 +49,6 @@ public class ExcelTsetController {
 	 */
 	@RequestMapping("/deriveExcel")
 	public void customerExcel(HttpServletRequest request,HttpServletResponse response){
-		System.out.println("=======================================");
 		 // 第一步，创建一个webbook，对应一个Excel文件  
         HSSFWorkbook wb = new HSSFWorkbook();  
         // 第二步，在webbook中添加一个sheet,对应Excel文件中的sheet  
@@ -79,6 +81,8 @@ public class ExcelTsetController {
         
         // 第五步，写入实体数据 实际应用中这些数据从数据库得到，  
 		List<Test> list=excelservice.queryAll();
+		//临时路径
+    	String filePath = PathService.Path(request)+"\\"+"customer.xls";
         for (int i = 0; i < list.size(); i++)
         {  
             row = sheet.createRow((int) i + 1);  
@@ -92,9 +96,10 @@ public class ExcelTsetController {
         // 第六步，将文件存到指定位置  
         try  
         {  
-        	FileOutputStream fout = new FileOutputStream(PathService.Path(request)+"/"+"customer.xls");  
-            wb.write(fout);  
-            fout.close();  
+        	System.out.println(filePath);
+        	FileOutputStream fout = new FileOutputStream(filePath);  
+            wb.write(fout);
+            fout.close();
             ServletContext context = request.getSession().getServletContext();  
 		    //通过context方式直接获取文件的路径  
 		    String path = context.getRealPath("/导出测试表.xls");  
@@ -105,19 +110,23 @@ public class ExcelTsetController {
 		    //告诉浏览器用下载的方式打开图片  
 		    response.setHeader("content-disposition", "attachment;filename="+filename);  
 		    //将图片使用字节流的形式写给客户机  
-		    @SuppressWarnings("resource")
-			InputStream is = new FileInputStream(PathService.Path(request)+"/"+"customer.xls"); //从这个路径下读取文件 
+			InputStream is = new FileInputStream(filePath); //从这个路径下读取文件 
 		    OutputStream out = response.getOutputStream();  
 		    byte[] buffer = new byte[1024];  
 		    int len = 0;  
 		    while((len=is.read(buffer))!=-1){  
 		        out.write(buffer, 0, len);  
 		    }
+		    is.close();
+		    out.close();
         }  
         catch (Exception e)
         {  
             e.printStackTrace();
-        }
+        }finally {
+        	File file = new File(filePath);
+    	    file.delete();
+		}
 	}
 	
 	/**
@@ -142,13 +151,43 @@ public class ExcelTsetController {
 				path.mkdirs();
 			}
 			
-			System.out.println("保存路径："+path);
 			FileOutputStream fos=new FileOutputStream(path+"/"+fileName);
 			
 			fos.write(file.getBytes());
 			fos.flush();
 			fos.close();
 			
+			FileInputStream fileIn = new FileInputStream(path+"/"+fileName);
+			//根据指定的文件输入流导入Excel从而产生Workbook对象
+			Workbook wb0 = new HSSFWorkbook(fileIn);
+			//获取Excel文档中的第一个表单
+			Sheet sht0 = wb0.getSheetAt(0);
+			//对Sheet中的每一行进行迭代
+			for (Row r : sht0) {
+				//如果当前行的行号（从0开始）未达到2（第三行）则从新循环
+				if(r.getRowNum()<1){
+					continue;
+				}
+				//创建实体类
+				Test info=new Test();
+				//取出当前行第1个单元格数据，并封装在info实体属性上
+				if(r.getCell(1)!=null){
+					info.setName(r.getCell(1).getStringCellValue());
+				}
+				if(r.getCell(2)!=null){
+					info.setBanji(r.getCell(2).getStringCellValue());
+				}
+				if(r.getCell(3)!=null){
+					info.setBscj(r.getCell(3).getStringCellValue());
+				}
+				if(r.getCell(4)!=null){
+					info.setJscj(r.getCell(4).getStringCellValue());
+				}
+				excelservice.insertTest(info);
+				File file2 = new File(path+"/"+fileName);
+				file2.delete();
+		    }
+		    fileIn.close();
 	    	map.put("result","1");
 	    }else{
 	    	map.put("result","2");

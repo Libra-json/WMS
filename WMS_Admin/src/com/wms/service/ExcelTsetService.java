@@ -7,4 +7,6 @@ import com.wms.bean.Test;
 public interface ExcelTsetService {
 
 	List<Test> queryAll();
+
+	void insertTest(Test info);
 }

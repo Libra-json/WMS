@@ -20,4 +20,9 @@ public class ExcelTestServiceImpl implements ExcelTsetService {
 		return execlTestDAO.queryAll();
 	}
 
+	@Override
+	public void insertTest(Test info) {
+		execlTestDAO.insertTest(info);
+	}
+
 }
