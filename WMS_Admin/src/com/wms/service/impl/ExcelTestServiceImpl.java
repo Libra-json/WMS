@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.wms.bean.Note;
 import com.wms.bean.Test;
 import com.wms.dao.ExeclTestDAO;
 import com.wms.service.ExcelTsetService;
@@ -23,6 +24,11 @@ public class ExcelTestServiceImpl implements ExcelTsetService {
 	@Override
 	public void insertTest(Test info) {
 		execlTestDAO.insertTest(info);
+	}
+
+	@Override
+	public Note selectNote() {
+		return execlTestDAO.selectNote();
 	}
 
 }

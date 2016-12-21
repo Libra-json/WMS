@@ -47,19 +47,38 @@
 		<button type="submit" class="btn btn-primary btn-o">
 			导出
 		</button>
-	</form><br/>
+		<button type="button" class="btn btn-primary btn-o" data-toggle="modal" data-target=".bs-example-modal-sm">
+			导入
+		</button>
+		<button type="button" class="btn btn-primary basic-message" onclick="successMessage()">
+			弹窗
+		</button>
+		<button type="button" class="btn btn-primary basic-message" onclick="warningMessage()">
+			删除数据
+		</button>
+	</form>
 	
-	<button class="btn btn-primary btn-o" data-toggle="modal" data-target=".bs-example-modal-sm">
-		导入
-	</button><br/>
-	
-	<button style="margin-top: 20px;" class="btn btn-primary basic-message" onclick="successMessage()">
-		弹窗
-	</button>
-	<br/>
-	<button style="margin-top: 20px;" class="btn btn-primary basic-message" onclick="warningMessage()">
-		删除数据
-	</button>
+	<form method="post" id="noteForm">
+		<div style="border: 1px solid gray;margin-top: 25px;width:30%;">
+			<div style="margin-bottom:20px;margin-left: 40px;margin-top: 25px;">
+				<label for="showEasing" class="control-label">
+					收信人:
+				</label><br/>
+				<input type="text" style="width:85%;" name="mobile" class="input-small" id="showEasing" placeholder="请输入收件人">
+		    </div>
+			
+			<div style="margin-bottom:20px;margin-left:40px;">
+				<label for="wordtext" class="control-label">
+					短信内容:
+				</label><br/>
+				<textarea id="wordtext" name="content" style="width:85%;height:100px;" placeholder="请输入短信内容"></textarea>
+		        <div id="wordage"></div>
+			</div>
+			<button type="button" onclick="fsNote()" style="margin-bottom: 20px;margin-left: 40px;" class="btn btn-wide btn-success">
+				确认发送
+			</button>
+		</div>
+	</form>
 	
 	<!-- 弹出框 -->
 	<div class="modal fade bs-example-modal-sm"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -111,7 +130,35 @@
 			</div>
 		</div>
 	</div>
+	<!-- ============导入js包============= -->
+	<script src="assets/js/jquery-3.1.1.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="vendor/modernizr/modernizr.js"></script>
+	<script src="vendor/jquery-cookie/jquery.cookie.js"></script>
+	<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script src="vendor/bootstrap-fileinput/jasny-bootstrap.js"></script>
+	<script src="assets/js/main.js"></script>
+	<!-- 上传文件需导入此包 -->
+	<script src="vendor/jquery/jquery-form.js"></script>
+	
+	<!-- 提示弹窗使用 -->
+	<script src="vendor/sweetalert/sweet-alert.min.js"></script>
 	<script type="text/javascript">
+        var dlimitNum = 65;
+        var dpattern = '还可以输入' + dlimitNum + '字';
+        document.getElementById("wordage").innerHTML = dpattern;
+        
+        $("#wordtext").keyup(function(){
+            var dremain = $(this).val().length;
+            if (dremain > 65){
+                pattern = "字数超过65个限制！请重新输入！";
+            } else {
+                var dresult = 65 - dremain;
+                dpattern = '还可以输入' + dresult + '字';
+            }
+            document.getElementById("wordage").innerHTML = dpattern;
+        });
+        
 		function submitForm() {
 			$("#fileSC").ajaxSubmit({
 	            type: 'post',
@@ -160,24 +207,35 @@
 			}, function() {
 				swal("删除成功!", "您选择的数据已成功删除！", "success");
 			});
-
 		}
 		
+		function fsNote(){
+			var showEasing = document.getElementById("showEasing").value;
+			var wordtext = document.getElementById("wordtext").value;
+			$.post("excel/note.do",
+					{"mobile":showEasing,"content":wordtext},
+	            	function(data) {
+						if(data.result=="fail"){
+		            		swal({
+								title: "发送失败!",
+								text:"请注意填选收信人的格式！",
+								confirmButtonColor: "#007AFF"
+							});
+							data.preventDefault
+						}else if(data.result=="seccuss"){
+							swal({
+								title: "发送成功!",
+								type: "success",
+								confirmButtonColor: "#007AFF"
+							},function() {
+								window.location.href='ExcelTest.jsp';
+							});
+							data.preventDefault
+						}
+					}
+				);
+		}
 	</script>
-	
-	<!-- ============导入js包============= -->
-	<script src="vendor/jquery/jquery.min.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-	<script src="vendor/modernizr/modernizr.js"></script>
-	<script src="vendor/jquery-cookie/jquery.cookie.js"></script>
-	<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<script src="vendor/bootstrap-fileinput/jasny-bootstrap.js"></script>
-	<script src="assets/js/main.js"></script>
-	<!-- 上传文件需导入此包 -->
-	<script src="vendor/jquery/jquery-form.js"></script>
-	
-	<!-- 提示弹窗使用 -->
-	<script src="vendor/sweetalert/sweet-alert.min.js"></script>
 	<script>
 		jQuery(document).ready(function() {
 			Main.init();
